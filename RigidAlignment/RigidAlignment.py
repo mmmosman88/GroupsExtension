@@ -164,6 +164,7 @@ class RigidAlignmentLogic(ScriptedLoadableModuleLogic):
          --sphere [<std::string> common unit sphere]
          --output [<std::string> output directory] 
     """
+    print "--- Inspecting Input ---"
     # Creation of the parameters of SPV
     SPV_parameters = {}
     SPV_parameters["Directory"] = modelsDir
@@ -171,14 +172,22 @@ class RigidAlignmentLogic(ScriptedLoadableModuleLogic):
     if hasattr(slicer.modules, 'shapepopulationviewer'):
       SPV = slicer.modules.shapepopulationviewer
     #   If SPV has been installed via the Extension Manager
-    elif hasattr(slicer.modules, 'launcher'):`
+    elif hasattr(slicer.modules, 'launcher'):
       SPV = slicer.modules.launcher
     # Launch SPV
-    slicer.cli.run(SPV, None, SPV_parameters, wait_for_completion=True)
-
+    slicer.cli.run(module = SPV, node = None, parameters = SPV_parameters, wait_for_completion=True)
+    
+    print "--- Rigid Alignment Running ---"
+    # Run Rigid Alignment
     RigidAlignment_parameters = {}
     RigidAlignment_parameters["mesh"]       = modelsDir
     RigidAlignment_parameters["landmark"]   = fiducialDir
     RigidAlignment_parameters["sphere"]     = sphereDir
     RigidAlignment_parameters["output"]     = outputDir
-    self.setupModule(slicer.modules.rigidwrapper, None, cli_parameters, wait_for_completion=True)
+    #slicer.cli.run(module = slicer.modules.rigidwrapper, node = None, parameters = RigidAlignment_parameters, wait_for_completion=True)
+
+    print "--- Inspecting Results ---"
+    # Inspect Results
+    SPV_parameters = {}
+    SPV_parameters["Directory"] = outputDir
+    slicer.cli.run(module = SPV, node = None, parameters = SPV_parameters, wait_for_completion=True)
