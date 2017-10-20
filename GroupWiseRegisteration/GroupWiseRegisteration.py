@@ -20,7 +20,7 @@ class GroupWiseRegisteration(ScriptedLoadableModule):
         self.parent.title = "GroupWiseRegisteration"  # TODO make this more human readable by adding spaces
         self.parent.categories = ["Quantification"]
         self.parent.dependencies = []
-        self.parent.contributors = ["Priscille de Dumast (University of Michigan), Ilwoo Lyu (UNC)"]
+        self.parent.contributors = ["Mahmoud Mostapha (UNC)"]
         self.parent.helpText = """
         ...
     """
